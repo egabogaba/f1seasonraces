@@ -3,31 +3,25 @@ package api.f1season.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import api.f1season.entities.Events;
-import api.f1season.services.EventsService;
+import api.f1season.entities.Drivers;
+import api.f1season.services.DriversService;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
-@RequestMapping("/api/v1/events")
-public class EventsController {
-
+@RequestMapping("api/v1/drivers")
+public class DriversController {
 	@Autowired
-	private EventsService eventsService;
-	
-	
+	private DriversService driversService;
 	@ApiResponses(
             value = {@ApiResponse(responseCode = "200", description = "Success"),
                     @ApiResponse(responseCode = "202", description = "Accepted"),
@@ -41,14 +35,14 @@ public class EventsController {
                     @ApiResponse(responseCode = "415", description = "Unsupported Media Type"),
                     @ApiResponse(responseCode = "500", description = "Failure"),
                     @ApiResponse(responseCode = "501", description = "No Implemented")})
-	@GetMapping()
-	public List<Events> getEvent(@RequestParam(value = "eventId", required = false) Long eventId) {
-		if(eventId == null) {
-			return eventsService.findAllEvent();
+	@GetMapping
+	public List<Drivers> getDrivers(@RequestParam(value = "driverId", required = false) Long driverId){
+		if(driverId == null) {
+			return driversService.findAllDriver();
 		}
-		List<Events> eventos = new ArrayList<>();
-		eventos.add(eventsService.findEvent(eventId));
-		return eventos;
+		List<Drivers> drivers = new ArrayList<>();
+		drivers.add(driversService.findDriver(driverId));
+		return drivers;
 	}
 	@ApiResponses(
             value = {@ApiResponse(responseCode = "200", description = "Success"),
@@ -64,9 +58,9 @@ public class EventsController {
                     @ApiResponse(responseCode = "500", description = "Failure"),
                     @ApiResponse(responseCode = "501", description = "No Implemented")})
 	@PostMapping
-	public Events postEvent(@RequestBody Events event) {		
-		
-		return eventsService.saveEvent(event);		
+	public Drivers postDriver(@RequestBody Drivers driver) {
+		System.out.println(driver);
+		return driversService.saveDriver(driver);
 	}
 	@ApiResponses(
             value = {@ApiResponse(responseCode = "200", description = "Success"),
@@ -81,11 +75,12 @@ public class EventsController {
                     @ApiResponse(responseCode = "415", description = "Unsupported Media Type"),
                     @ApiResponse(responseCode = "500", description = "Failure"),
                     @ApiResponse(responseCode = "501", description = "No Implemented")})
-	@PatchMapping
-	public Events patchEvent(@PathParam(value = "eventId") Long eventId, @RequestBody Events event) {
+	@PutMapping
+	public Drivers putDrivers(@RequestParam(value = "driverId")Long driverId, @RequestBody Drivers driver) {
 		
-		return eventsService.updateEvent(eventId, event);		
+		return driversService.updateDriver(driverId, driver);
 	}
+	
 	@ApiResponses(
             value = {@ApiResponse(responseCode = "200", description = "Success"),
                     @ApiResponse(responseCode = "202", description = "Accepted"),
@@ -99,9 +94,11 @@ public class EventsController {
                     @ApiResponse(responseCode = "415", description = "Unsupported Media Type"),
                     @ApiResponse(responseCode = "500", description = "Failure"),
                     @ApiResponse(responseCode = "501", description = "No Implemented")})
+	
 	@DeleteMapping
-	public void deleteEvent(@PathParam(value = "eventId") Long eventId) {
-		
-		eventsService.deleteEvent(eventId);		
+	public void deleteDriver(@RequestParam(value = "driverId") Long driverId) {
+		driversService.deleteDriver(driverId);
 	}
+	
+	
 }
