@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import api.f1season.entities.Events;
 import api.f1season.entities.Teams;
 import api.f1season.repositories.TeamsRepository;
 
@@ -15,7 +14,7 @@ public class TeamsService {
 	@Autowired
 	private TeamsRepository teamsRepository;
 	
-public Teams findTeam(Long teamId) {
+	public Teams findTeam(Long teamId) {
 		
 		return teamsRepository
 			.findById(teamId)
