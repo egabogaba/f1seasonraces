@@ -76,7 +76,7 @@ public class DriversController {
                     @ApiResponse(responseCode = "500", description = "Failure"),
                     @ApiResponse(responseCode = "501", description = "No Implemented")})
 	@PutMapping
-	public Drivers putDrivers(@RequestParam(value = "driverId")Long driverId, @RequestBody Drivers driver) {
+	public Drivers putDrivers(@RequestParam(value = "driverId") Long driverId, @RequestBody Drivers driver) {
 		
 		return driversService.updateDriver(driverId, driver);
 	}

@@ -27,7 +27,6 @@ public class EventsController {
 	@Autowired
 	private EventsService eventsService;
 	
-	
 	@ApiResponses(
             value = {@ApiResponse(responseCode = "200", description = "Success"),
                     @ApiResponse(responseCode = "202", description = "Accepted"),
