@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.f1season.entities.Teams;
@@ -39,8 +40,8 @@ public class TeamsController {
                     @ApiResponse(responseCode = "500", description = "Failure"),
                     @ApiResponse(responseCode = "501", description = "No Implemented")})
 	
-	@GetMapping(params = "teamId")
-	public Object getTeam(@PathParam(value = "teamId") Long teamId) {
+	@GetMapping
+	public Object getTeam(@RequestParam(value = "teamId", required = false) Long teamId) {
 		
 		if (teamId == null) {
 			return teamsService.findAllTeam();
