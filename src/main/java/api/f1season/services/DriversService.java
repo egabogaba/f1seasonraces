@@ -37,8 +37,6 @@ public class DriversService {
 			return new Drivers();
 		}
 		oldDriver.setDriverName(driver.getDriverName());
-		oldDriver.setDriverPoint(driver.getDriverPoint());
-		oldDriver.setTeam(driver.getTeam());
 		
 		return driversrepository.save(oldDriver);
 	}

@@ -40,8 +40,6 @@ public class TeamsService {
 		}
 		
 		oldTeam.setTeamName(team.getTeamName());
-		oldTeam.setTeamPoint(team.getTeamPoint());
-		
 		
 		return teamsRepository.save(oldTeam);
 	}
