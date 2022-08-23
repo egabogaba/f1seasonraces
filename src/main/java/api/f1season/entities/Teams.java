@@ -1,11 +1,20 @@
 package api.f1season.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +33,17 @@ public class Teams {
 
 	@Column(name = "team_name")
 	private String teamName;
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "team_id")
+	private Set<EventTeams> eventTeams;
 	
-	@Column(name = "team_point")
-	private Integer teamPoint;
+	@JsonBackReference
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		name = "team_drivers",
+		joinColumns = @JoinColumn(name = "driver_id"),
+		inverseJoinColumns = @JoinColumn(name = "team_id")
+	)
+	private Set<Drivers> drivers;
 }
