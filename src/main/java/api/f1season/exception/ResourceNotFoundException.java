@@ -1,4 +1,4 @@
-package api.f1season.eceptions;
+package api.f1season.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
