@@ -44,32 +44,17 @@ public class EventsController {
             @ApiResponse(responseCode = "500", description = "Failure"),
             @ApiResponse(responseCode = "501", description = "No Implemented") })
     @GetMapping()
-    public EventListDto getListEvent(
+    public ResponseEntity<?> getListEvent(
         @RequestParam(value = "page", defaultValue = AppConstant.PAGE_DEFAULT_VALUE, required = false) Short page,
         @RequestParam(value = "limit", defaultValue = AppConstant.LIMIT_DEFAULT_VALUE, required = false) Byte limit,
         @RequestParam(value = "sortBy", defaultValue = "eventId", required = false) String sortBy,
-        @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
+        @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir,
+        @RequestParam(value = "eventId", required = false) Long eventId
+        
     ) {
-
-        return eventsService.findAllEvent(page, limit, sortBy, sortDir);
-    }
-
-    @ApiResponses(
-        value = {
-            @ApiResponse(responseCode = "200", description = "Success"),
-            @ApiResponse(responseCode = "202", description = "Accepted"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized"),
-            @ApiResponse(responseCode = "403", description = "Forbidden"),
-            @ApiResponse(responseCode = "404", description = "Not Found"),
-            @ApiResponse(responseCode = "405", description = "Invalid Input"),
-            @ApiResponse(responseCode = "406", description = "Not Acceptable"),
-            @ApiResponse(responseCode = "408", description = "Request Timeout"),
-            @ApiResponse(responseCode = "415", description = "Unsupported Media Type"),
-            @ApiResponse(responseCode = "500", description = "Failure"),
-            @ApiResponse(responseCode = "501", description = "No Implemented") })
-    @GetMapping(params = "eventId")
-    public ResponseEntity<EventsDto> getEvent(@PathParam(value = "eventId") Long eventId) {
+        if (eventId == null) {
+            return new ResponseEntity<>(eventsService.findAllEvent(page, limit, sortBy, sortDir), HttpStatus.OK);
+        }
 
         return new ResponseEntity<>(eventsService.findEvent(eventId), HttpStatus.OK);
     }
