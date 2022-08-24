@@ -1,8 +1,6 @@
 package api.f1season.services;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,8 +10,9 @@ import org.springframework.stereotype.Service;
 
 import api.f1season.dto.EventListDto;
 import api.f1season.dto.EventsDto;
-import api.f1season.eceptions.ResourceNotFoundException;
+import api.f1season.dto.PatchEventsDto;
 import api.f1season.entities.Events;
+import api.f1season.exception.ResourceNotFoundException;
 import api.f1season.repositories.EventsRepository;
 
 @Service
@@ -68,7 +67,7 @@ public class EventsService {
         return mapToEventsDto(event);
     }
 
-    public EventsDto patchEvent(Long eventId, EventsDto eventsDto) {
+    public EventsDto patchEvent(Long eventId, PatchEventsDto eventsDto) {
         Events event = eventsRepository.findById(eventId)
             .orElseThrow(() -> new ResourceNotFoundException("Events", "eventId", eventId));
 

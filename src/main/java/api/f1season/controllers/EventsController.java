@@ -1,5 +1,6 @@
 package api.f1season.controllers;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import api.f1season.dto.EventListDto;
 import api.f1season.dto.EventsDto;
+import api.f1season.dto.PatchEventsDto;
 import api.f1season.services.EventsService;
 import api.f1season.utils.AppConstant;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -74,7 +76,7 @@ public class EventsController {
             @ApiResponse(responseCode = "500", description = "Failure"),
             @ApiResponse(responseCode = "501", description = "No Implemented") })
     @PostMapping
-    public ResponseEntity<EventsDto> postEvent(@RequestBody EventsDto eventsDto) {
+    public ResponseEntity<EventsDto> postEvent(@Valid @RequestBody EventsDto eventsDto) {
 
         return new ResponseEntity<>(eventsService.saveEvent(eventsDto), HttpStatus.CREATED);
     }
@@ -96,8 +98,9 @@ public class EventsController {
     @PutMapping
     public ResponseEntity<EventsDto> putEvent(
         @PathParam(value = "eventId") Long eventId,
-        @RequestBody EventsDto event
+        @Valid @RequestBody EventsDto event
     ) {
+        System.out.println(" ----------------------------------------------- ");
 
         return new ResponseEntity<>(eventsService.putEvent(eventId, event), HttpStatus.OK);
     }
@@ -119,7 +122,7 @@ public class EventsController {
     @PatchMapping
     public ResponseEntity<EventsDto> patchEvent(
         @PathParam(value = "eventId") Long eventId,
-        @RequestBody EventsDto event
+        @Valid @RequestBody PatchEventsDto event
     ) {
 
         return new ResponseEntity<>(eventsService.patchEvent(eventId, event), HttpStatus.OK);
